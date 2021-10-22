@@ -1,24 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  NavLink,
+} from "react-router-dom";
+import { CustomAlertPopUpContextProvider } from "./contexts/AlertPopUpContext";
+import LoginPage from "./pages/LoginPage";
+import AlertPopUp from "./components/AlertPopUp";
 
 function App() {
+  const activeSyle = { fontWeight: "bold", color: "green" };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <CustomAlertPopUpContextProvider>
+        <nav>
+          <NavLink exact to="" activeStyle={activeSyle}>
+            HOME
+          </NavLink>
+          <NavLink
+            to="/login"
+            activeStyle={activeSyle}
+            style={{ marginLeft: "1rem" }}
+          >
+            LOGIN
+          </NavLink>
+        </nav>
+
+        <Switch>
+          <Route exact path="/">
+            <section>
+              <h2>HOME</h2>
+            </section>
+          </Route>
+          <Route path="/login">
+            <LoginPage />
+          </Route>
+        </Switch>
+        <AlertPopUp />
+      </CustomAlertPopUpContextProvider>
+    </Router>
   );
 }
 
